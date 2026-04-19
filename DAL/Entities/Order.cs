@@ -8,9 +8,12 @@
         public decimal  Totalprice { get; set; }
         public  string Status { get; set; }
         public int Quantity { get; set; }
+        public Guid Customerid { get; set; }
+		//navigation properties
 
-        //navigation properties
-        public virtual ICollection<OrderBook>? OrderBooks { get; set; } = new HashSet<OrderBook>();
+        public virtual Customer? Customer { get; set; }
+		public virtual ICollection<OrderBook>? OrderBooks { get; set; } = new HashSet<OrderBook>();
+
 
     }
 }

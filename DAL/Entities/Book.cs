@@ -25,7 +25,7 @@
         //note why not null
         public virtual Employee Employee { get; set; }
 
-        public virtual ICollection<OrderBook> OrderBook { get; set; }=new HashSet<OrderBook>();
+        public virtual ICollection<OrderBook> OrderBooks { get; set; }=new HashSet<OrderBook>();
 
 
     }
