@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DAL/DAL.csproj" Id="e6afbfbb-2b75-407b-bd5f-8ae352249ee9" />
+  <Project Path="librarysystem/librarysystem.csproj" />
+</Solution>
