@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="BL/BL.csproj" Id="fc39f183-cec0-44f5-b5f5-80a1e1fc73c0" />
   <Project Path="DAL/DAL.csproj" Id="e6afbfbb-2b75-407b-bd5f-8ae352249ee9" />
   <Project Path="librarysystem/librarysystem.csproj" />
 </Solution>
