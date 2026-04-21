@@ -3,54 +3,43 @@ using System.Collections.Generic;
 using System.Text;
 using DAL.repositories;
 using librarysystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BL.services
 {
-    public  class Bookservice
+    public  class Genericservice<T>:IBaseservice<T> where T :class
     {
-       private IBase<Book> repo;
-        public Bookservice(IBase<Book> r)
+       private readonly IBase<T> repo;
+        public Genericservice(IBase<T> r)
         {
             repo = r;
         }
-
-
-        public List<Book> Getall()
+        public List<T>? Getall()
         {
-            return repo.GetAll();
+            return repo.getAll();
         }
-
-        public void ADD(Book book)
+        public void ADD(T t)
         {
-            repo.add(book);
+            repo.add(t);
         }
-
-        public void Delete(int id)
+        public void Delete( T t)
         {
-            var book = repo.search(id);
-            if (book != null)
-                repo.Delete(book);  
+                repo.delete(t);  
         }
-
-        public Book Details(int id)
+        public T? Getbyid(Guid id)
         {
-            var book = repo.search(id);
-            if (book != null)
-                return book;
+            var t = repo.getbyid(id);
+            if (t != null)
+                return t;
             else
                 return null;
 		}
 
-  //      public void Edit(int id)
-  //      {
-		//	var book = repo.search(id);
-  //          if(book!=null)
-  //          {
-  //              repo.Delete(book);
-  //          }
-		//}
+        public void Edit(T t)
+        {
+            repo.edit(t);
+        }
 
-
-
+       
     }
 }

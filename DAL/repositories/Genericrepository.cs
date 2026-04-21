@@ -15,29 +15,29 @@ namespace DAL.repositories
             _context = context;
             dbset = _context.Set<T>();
         }
-        public List<T> GetAll()
+        public List<T> getAll()
         {
             return dbset.ToList();
         }
-        public T search(int id)
+        public T? getbyid(Guid id)
         {
             return dbset.Find(id);
+            //return dbset.Select(s => s).Where(s => s. == id);
         }
         public void add(T t)
         {
             dbset.Add(t);
         }
 
-        public void Delete(T t)
+        public void delete(T t)
         {
             dbset.Remove(t);
         }
 
-      
-        //public void Edit(T t)
-        //{
-        //    dbset.Update(t);
-        //}
+        public void edit(T t)
+        {
+            dbset.Update(t);
+        }
 
 
     }

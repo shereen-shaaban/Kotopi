@@ -7,12 +7,11 @@ namespace DAL.repositories
     public  interface IBase<T> where T : class
     {
 
-        List<T> GetAll();
-        T search(int id);
-        //T Details(int id);
+        List<T>? getAll();
+        T? getbyid(Guid id);
         void add(T t);
-        void Delete(T t);
-        //void Edit (T t);
+        void delete(T t);
+        void edit(T t);
 
     }
 }
