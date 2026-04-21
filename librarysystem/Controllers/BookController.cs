@@ -26,29 +26,45 @@ namespace librarysystem.Controllers
 				return View("error");
 
 		}
-		public IActionResult EditBook(Guid id)
+
+        [HttpGet]
+		public IActionResult Edit(Guid id)
         {
             Book book = baseservice.Getbyid(id);
             if(book!=null)
-                return View("EditBook");
+                return View("Edit",book);
             else 
                 return View("error");
-
 		}
-        public IActionResult DeleteBook(Guid id)
+        [HttpPost]
+        public IActionResult Edit(Book book)
+        {
+            baseservice.Edit(book);
+            return View("index");
+        }
+        public IActionResult Delete(Guid id)
         {
             Book book = baseservice.Getbyid(id);
             if (book != null)
-                return View("DeleteBook");
+                return View("Delete");
             else
                 return View("error");
-
 		}
-        public IActionResult AddBook(Book book)
+        public IActionResult Delete(Book book)
         {
-            Book book1 = book;
-            baseservice.ADD(book1);
-            return View("AddBook", book1);
+            baseservice.Delete(book);
+            return View("index");
         }
-    }
+        [HttpPost]
+        public IActionResult Add(Book book)
+        {
+            baseservice.ADD(book);
+            return View("index");
+        }
+        [HttpGet]
+		public IActionResult Add()
+		{
+			return View("Add");
+		}
+	}
 }

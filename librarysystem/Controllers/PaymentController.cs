@@ -6,7 +6,9 @@ namespace librarysystem.Controllers
 {
     public class PaymentController:Controller
     {
-        public IActionResult Getall()
+		//not decided it's logic untill now  sigleton or not
+		// note =>we wouldn't implement update action
+		public IActionResult Getall()
         {
            List< Payment> payments= new List<Payment>();
             return View("Getall", payments);
@@ -15,17 +17,6 @@ namespace librarysystem.Controllers
         {
             Payment payment=new Payment();
             return View("Details", payment);
-        }
-
-        //filter payment date,customer id
-        //public IActionResult Filter(object filter)
-        //{
-        //    List<Payment> payments= new List<Payment>();
-        //    return View("Filter",payments);
-        //}
-        public IActionResult Edit(Guid id)
-        {
-           return View("Edit");
         }
         public IActionResult Delete(Guid id)
         {

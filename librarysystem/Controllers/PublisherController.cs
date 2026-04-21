@@ -1,37 +1,66 @@
-﻿using librarysystem.Models;
+﻿using BL.services;
+using librarysystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace librarysystem.Controllers
 {
     public class PublisherController:Controller
     {
+        private IBaseservice<Publisher> baseservice;
+        public PublisherController(IBaseservice<Publisher> _baseservice)
+        {
+            baseservice = _baseservice;
+        }
         public IActionResult Getall()
         {
-            List<Publisher> publishers = new List<Publisher>();
+            List<Publisher> publishers =baseservice.Getall();
             return View("Getall",publishers);
         }
         public IActionResult Details(Guid id)
         {
-            Publisher publisher = new Publisher();
+            Publisher publisher = baseservice.Getbyid(id);
             return View("Details",publisher);
         }
-        // filter by type,age
-        //public IActionResult Filter(object filter)
-        //{
-        //    List<Publisher>publishers = new List<Publisher>();
-        //    return View("Filter",publishers);
-        //}
         public IActionResult Add(Publisher publisher)
+        {
+            baseservice.ADD(publisher);
+            return View("index");
+        }
+        [HttpGet]
+        public IActionResult Add()
         {
             return View("Add");
         }
+        [HttpGet]
         public IActionResult Edit(Guid id)
         {
-            return View("Edit");
+            Publisher publisher = baseservice.Getbyid(id);
+            if (publisher != null)
+                return View("Edit", publisher);
+            else
+                return View("error");
         }
+        [HttpPost]
+        public IActionResult Edit(Publisher publisher)
+        {
+            baseservice.Edit(publisher);
+            return View("index");
+        }
+        [HttpGet]
 		public IActionResult Delete(Guid id)
 		{
-			return View("Delete");
+            Publisher publisher = baseservice.Getbyid(id);
+            if (publisher != null)
+                return View("Delete");
+            else
+                return View("error");
 		}
+
+        [HttpPost]
+        public IActionResult Delete(Publisher publisher)
+        {
+            baseservice.Delete(publisher);
+            return View("index");
+        }
 	}
 }

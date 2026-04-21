@@ -1,4 +1,5 @@
 ﻿
+using BL.services;
 using librarysystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,31 +7,65 @@ namespace librarysystem.Controllers
 {
     public class CustomerController:Controller
     {
-       public IActionResult Getall()
+        private IBaseservice<Customer> baseservice;
+        public CustomerController(IBaseservice<Customer> _baseservice)
         {
-            List<Customer> customers = new List<Customer>();
+            baseservice = _baseservice;
+        }
+        public IActionResult Getall()
+        {
+            List<Customer> customers = baseservice.Getall();
             return View("Getall",customers);
         }
-		public IActionResult Details()
+		public IActionResult Details(Guid id)
 		{
-			Customer customer= new Customer();
-			return View("Details", customer);
+            Customer customer = baseservice.Getbyid(id);
+            if (customer != null)
+                return View("Details", customer);
+            else
+                return View("error");
 		}
-       
-        public IActionResult Add(
-            )
+        [HttpPost]
+        public IActionResult Add(Customer customer)
         {
-            return View("Add");
+            baseservice.ADD(customer);
+            return View("index");
         }
-
+        [HttpGet]
+		public IActionResult Add()
+		{
+			return View("Add");
+		}
+		[HttpGet]
         public IActionResult Edit( Guid id)
         {
-            return View("Edit");
+            Customer customer = baseservice.Getbyid(id);
+            if (customer != null)
+                return View("Edit",customer);
+            else
+                return View("error");
         }
+        public  IActionResult Edit(Customer customer)
+        {
+            baseservice.Edit(customer);
+            return View("index");
+        }
+        [HttpGet]
         public IActionResult Delete(Guid id)
         {
-			return View("Delete");
+            Customer customer = baseservice.Getbyid(id);
+            if (customer != null)
+                return View("Delete");
+            else
+                return View("error");
 		}
+        [HttpPost]
+        public IActionResult Delete(Customer customer)
+        {
+            baseservice.Delete(customer);
+            return View("index");
+        
+        }
 
 
 	}
