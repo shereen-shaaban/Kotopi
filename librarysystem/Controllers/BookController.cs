@@ -1,42 +1,54 @@
-﻿using librarysystem.Models;
+﻿using BL.services;
+using librarysystem.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace librarysystem.Controllers
 {
     public class BookController : Controller
     {
+        private readonly IBaseservice<Book> baseservice;
+        public BookController(IBaseservice<Book> _baseservice)
+        {
+            baseservice = _baseservice;
+        }
         public IActionResult GetallBooks()
         {
-           List<Book> books = new List<Book>();
+           List<Book> books = baseservice.Getall();
             return View("GetallBooks", books);
         }
-        public IActionResult Details(int id)
+        //get by id
+        public IActionResult Details(Guid id)
         {
-            Book book = new Book();
-            return View("Details",book);
-        }
-        //filter by type ,published date,price ,publisher
-		//public IActionResult Filter(object type)//i nBusiness layr we will have only one function but in the body check how to work 
-		//{
-		//	List<Book> books = new List<Book>();
-		//	return View("Filter", books);
-		//}
+            Book book = baseservice.Getbyid(id);
+            if(book!=null)
+                return View("Details",book);
+            else
+				return View("error");
 
+		}
 		public IActionResult EditBook(Guid id)
         {
-            return View("EditBook");
-        }
+            Book book = baseservice.Getbyid(id);
+            if(book!=null)
+                return View("EditBook");
+            else 
+                return View("error");
+
+		}
         public IActionResult DeleteBook(Guid id)
         {
-            return View("DeleteBook");
-        }
-        public IActionResult AddBook()
+            Book book = baseservice.Getbyid(id);
+            if (book != null)
+                return View("DeleteBook");
+            else
+                return View("error");
+
+		}
+        public IActionResult AddBook(Book book)
         {
-            Book book = new Book();
-            return View("AddBook", book);
+            Book book1 = book;
+            baseservice.ADD(book1);
+            return View("AddBook", book1);
         }
-
-
-
     }
 }
